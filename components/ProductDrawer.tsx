@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { X } from "lucide-react";
+import { X, ChevronLeft } from "lucide-react";
 import { useShoppingCart } from "use-shopping-cart";
 import { useToast } from "@/components/ui/Toast";
 import type { Product } from "@/lib/products";
@@ -74,14 +74,16 @@ export function ProductDrawer({ product, isOpen, onClose }: ProductDrawerProps) 
 
             {/* Drawer - Full width on mobile, 400px on desktop */}
             <div
-                className={`fixed top-0 right-0 h-full w-full md:max-w-[400px] bg-white z-40 shadow-2xl transform transition-transform duration-300 cubic-bezier(0.16, 1, 0.3, 1) pt-[65px] ${isOpen ? "translate-x-0" : "translate-x-full"
+                className={`fixed top-0 right-0 h-full w-full md:max-w-[400px] bg-white z-[100] shadow-2xl transform transition-transform duration-300 cubic-bezier(0.16, 1, 0.3, 1) pt-[65px] ${isOpen ? "translate-x-0" : "translate-x-full"
                     }`}
             >
+                {/* Back Button (Visible on all devices) */}
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 p-2 text-stone-400 hover:text-stone-800 transition-colors z-10"
+                    className="absolute top-4 left-4 p-2 flex items-center gap-1 text-stone-800 z-10 font-serif hover:text-stone-600 transition-colors"
                 >
-                    <X className="w-6 h-6" />
+                    <ChevronLeft className="w-5 h-5" />
+                    <span className="text-sm font-medium">Back to Products</span>
                 </button>
 
                 {product && (
@@ -122,7 +124,7 @@ export function ProductDrawer({ product, isOpen, onClose }: ProductDrawerProps) 
                         </div>
 
                         {/* Footer - Always Visible Button */}
-                        <div className="p-4 border-t border-stone-100 bg-white">
+                        <div className="p-4 border-t border-stone-100 bg-white flex flex-col gap-3">
                             <button
                                 onClick={handleAddToCart}
                                 disabled={isAdded}
@@ -132,6 +134,13 @@ export function ProductDrawer({ product, isOpen, onClose }: ProductDrawerProps) 
                                     }`}
                             >
                                 {isAdded ? "Added!" : `Add to Cart - ${formattedPrice}`}
+                            </button>
+
+                            <button
+                                onClick={onClose}
+                                className="w-full py-3 rounded text-base font-medium text-stone-500 hover:text-stone-800 transition-colors hover:bg-stone-50"
+                            >
+                                Back to Products
                             </button>
                         </div>
                     </div>
