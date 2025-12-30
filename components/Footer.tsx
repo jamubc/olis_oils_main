@@ -4,7 +4,7 @@ import { SlateBackground } from "./SlateBackground";
 
 export function Footer() {
     return (
-        <footer className="relative pt-16 pb-12 mt-24 md:fixed md:bottom-0 md:left-0 md:w-full md:-z-10 text-stone-300 overflow-hidden">
+        <footer className="relative pt-16 pb-12 md:fixed md:bottom-0 md:left-0 md:w-full md:-z-10 text-stone-300 overflow-hidden">
             <SlateBackground />
             <div className="relative z-10 max-w-6xl mx-auto px-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
@@ -41,26 +41,18 @@ export function Footer() {
                         <ul className="space-y-3">
                             <li>
                                 <Link
-                                    href="/support#shipping"
-                                    className="text-stone-400 hover:text-white text-sm transition-colors"
-                                >
-                                    Shipping Policy
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/support#returns"
-                                    className="text-stone-400 hover:text-white text-sm transition-colors"
-                                >
-                                    Return Policy
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
                                     href="/support#faq"
                                     className="text-stone-400 hover:text-white text-sm transition-colors"
                                 >
                                     FAQ
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/support#shipping"
+                                    className="text-stone-400 hover:text-white text-sm transition-colors"
+                                >
+                                    Shipping & Returns
                                 </Link>
                             </li>
                             <li>
@@ -82,18 +74,10 @@ export function Footer() {
                         <ul className="space-y-3">
                             <li>
                                 <Link
-                                    href="/legal#terms"
+                                    href="/legal"
                                     className="text-stone-400 hover:text-white text-sm transition-colors"
                                 >
-                                    Terms of Service
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/legal#privacy"
-                                    className="text-stone-400 hover:text-white text-sm transition-colors"
-                                >
-                                    Privacy Policy
+                                    Privacy & Terms
                                 </Link>
                             </li>
                         </ul>
