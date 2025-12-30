@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+:root {
+  /* Future-proof CSS variables for Victorian/gothic theme evolution */
+  --color-primary: #44403c;
+  /* stone-700 */
+  --color-secondary: #78716c;
+  /* stone-500 */
+  --color-background: #fafaf9;
+  /* stone-50 */
+  --color-surface: #ffffff;
+  --color-text: #1c1917;
+  /* stone-900 */
+  --color-text-muted: #57534e;
+  /* stone-600 */
+  --color-border: #e7e5e4;
+  /* stone-200 */
+  --color-accent: #292524;
+  /* stone-800 */
+}
+
+@theme inline {
+  --color-background: var(--color-background);
+  --color-foreground: var(--color-text);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-merriweather);
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-merriweather), Georgia, serif;
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+/* Typography presets for future theme changes */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-merriweather), Georgia, serif;
+}
+
+/* Smooth transitions for theme evolution */
+* {
+  transition-property: color, background-color, border-color;
+  transition-duration: 200ms;
+  transition-timing-function: ease-in-out;
+}
