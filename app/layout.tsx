@@ -4,6 +4,7 @@ import "./globals.css";
 import { CartProvider } from "@/components/CartProvider";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { ToastProvider } from "@/components/ui/Toast";
 
 const merriweather = Merriweather({
   variable: "--font-merriweather",
@@ -33,9 +34,11 @@ export default function RootLayout({
         className={`${merriweather.variable} ${inter.variable} antialiased bg-stone-50 text-stone-900`}
       >
         <CartProvider>
-          <Navigation />
-          <main className="relative z-10 bg-stone-50 shadow-md md:mb-[450px]">{children}</main>
-          <Footer />
+          <ToastProvider>
+            <Navigation />
+            <main className="relative z-10 bg-stone-50 shadow-md md:mb-[450px]">{children}</main>
+            <Footer />
+          </ToastProvider>
         </CartProvider>
       </body>
     </html>

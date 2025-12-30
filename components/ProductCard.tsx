@@ -2,7 +2,9 @@
 
 import Image from "next/image";
 import { useShoppingCart } from "use-shopping-cart";
+import { useToast } from "@/components/ui/Toast";
 import type { Product } from "@/lib/products";
+import { useState } from "react";
 
 interface ProductCardProps {
     product: Product;
@@ -11,6 +13,8 @@ interface ProductCardProps {
 
 export function ProductCard({ product, onClick }: ProductCardProps) {
     const { addItem } = useShoppingCart();
+    const { showToast } = useToast();
+    const [isAdded, setIsAdded] = useState(false);
 
     const handleAddToCart = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -21,6 +25,10 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
             currency: product.currency,
             image: product.image,
         });
+        showToast(product.name, { image: product.image });
+
+        setIsAdded(true);
+        setTimeout(() => setIsAdded(false), 2000);
     };
 
     const formattedPrice = new Intl.NumberFormat("en-CA", {
@@ -60,9 +68,13 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
 
                     <button
                         onClick={handleAddToCart}
-                        className="bg-stone-800 text-white px-4 py-2 rounded text-sm hover:bg-stone-700 transition-colors"
+                        disabled={isAdded}
+                        className={`px-4 py-2 rounded text-sm transition-all duration-200 transform active:scale-95 ${isAdded
+                            ? "bg-[#C5A059] text-white"
+                            : "bg-stone-800 text-white hover:bg-stone-700"
+                            }`}
                     >
-                        Add to Cart
+                        {isAdded ? "Added!" : "Add to Cart"}
                     </button>
                 </div>
             </div>

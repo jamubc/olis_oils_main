@@ -1,0 +1,2 @@
+-- add estimated shipping time and cost to checkout page
+-- verify stripe (or switch provider... TBD)

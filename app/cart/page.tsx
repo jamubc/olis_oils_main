@@ -58,9 +58,10 @@ export default function CartPage() {
                 {Object.values(cartDetails ?? {}).map((item) => (
                     <div
                         key={item.id}
-                        className="flex items-center gap-6 bg-white p-4 rounded-lg border border-stone-200"
+                        className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 bg-white p-4 rounded-lg border border-stone-200"
                     >
-                        <div className="w-24 h-24 relative bg-stone-100 rounded overflow-hidden flex-shrink-0">
+                        {/* Product Image */}
+                        <div className="w-full md:w-24 h-48 md:h-24 relative bg-stone-100 rounded overflow-hidden flex-shrink-0">
                             <Image
                                 src={item.image || "/placeholder.jpg"}
                                 alt={item.name}
@@ -69,40 +70,49 @@ export default function CartPage() {
                             />
                         </div>
 
-                        <div className="flex-grow">
+                        {/* Product Details */}
+                        <div className="flex-grow w-full md:w-auto">
                             <h3 className="font-serif text-lg text-stone-800">{item.name}</h3>
-                            <p className="text-stone-600">{item.formattedPrice}</p>
+                            <p className="text-stone-600 md:hidden">{item.formattedPrice}</p> {/* Price below name on mobile */}
+                            <p className="text-stone-600 hidden md:block">{item.formattedPrice}</p>
                         </div>
 
-                        <div className="flex items-center gap-3">
+                        {/* Mobile: Controls Row (Quantity, Total, Remove) */}
+                        <div className="flex items-center justify-between w-full md:w-auto gap-4 md:gap-6">
+
+                            {/* Quantity Controls */}
+                            <div className="flex items-center gap-3 border border-stone-200 rounded px-2 py-1 md:border-0 md:px-0 md:py-0">
+                                <button
+                                    onClick={() => decrementItem(item.id)}
+                                    className="p-1 text-stone-600 hover:text-stone-800 transition-colors"
+                                    aria-label="Decrease quantity"
+                                >
+                                    <Minus className="w-4 h-4" />
+                                </button>
+                                <span className="w-8 text-center font-medium">{item.quantity}</span>
+                                <button
+                                    onClick={() => incrementItem(item.id)}
+                                    className="p-1 text-stone-600 hover:text-stone-800 transition-colors"
+                                    aria-label="Increase quantity"
+                                >
+                                    <Plus className="w-4 h-4" />
+                                </button>
+                            </div>
+
+                            {/* Total Price (Mobile & Desktop) */}
+                            <div className="text-right min-w-[80px]">
+                                <p className="font-medium text-stone-800">{item.formattedValue}</p>
+                            </div>
+
+                            {/* Remove Button */}
                             <button
-                                onClick={() => decrementItem(item.id)}
-                                className="p-1 text-stone-600 hover:text-stone-800 transition-colors"
-                                aria-label="Decrease quantity"
+                                onClick={() => removeItem(item.id)}
+                                className="p-2 text-stone-400 hover:text-red-600 transition-colors"
+                                aria-label="Remove item"
                             >
-                                <Minus className="w-4 h-4" />
-                            </button>
-                            <span className="w-8 text-center font-medium">{item.quantity}</span>
-                            <button
-                                onClick={() => incrementItem(item.id)}
-                                className="p-1 text-stone-600 hover:text-stone-800 transition-colors"
-                                aria-label="Increase quantity"
-                            >
-                                <Plus className="w-4 h-4" />
+                                <Trash2 className="w-5 h-5" />
                             </button>
                         </div>
-
-                        <div className="text-right min-w-[80px]">
-                            <p className="font-medium text-stone-800">{item.formattedValue}</p>
-                        </div>
-
-                        <button
-                            onClick={() => removeItem(item.id)}
-                            className="p-2 text-stone-400 hover:text-red-600 transition-colors"
-                            aria-label="Remove item"
-                        >
-                            <Trash2 className="w-5 h-5" />
-                        </button>
                     </div>
                 ))}
             </div>

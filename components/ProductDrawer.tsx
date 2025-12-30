@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { X } from "lucide-react";
 import { useShoppingCart } from "use-shopping-cart";
+import { useToast } from "@/components/ui/Toast";
 import type { Product } from "@/lib/products";
 import { useEffect, useState } from "react";
 
@@ -14,7 +15,9 @@ interface ProductDrawerProps {
 
 export function ProductDrawer({ product, isOpen, onClose }: ProductDrawerProps) {
     const { addItem } = useShoppingCart();
+    const { showToast } = useToast();
     const [isVisible, setIsVisible] = useState(false);
+    const [isAdded, setIsAdded] = useState(false);
 
     // Handle animation timing
     useEffect(() => {
@@ -49,6 +52,10 @@ export function ProductDrawer({ product, isOpen, onClose }: ProductDrawerProps) 
             currency: product.currency,
             image: product.image,
         });
+        showToast(product.name, { image: product.image });
+
+        setIsAdded(true);
+        setTimeout(() => setIsAdded(false), 2000);
     };
 
     const formattedPrice = product ? new Intl.NumberFormat("en-CA", {
@@ -58,16 +65,16 @@ export function ProductDrawer({ product, isOpen, onClose }: ProductDrawerProps) 
 
     return (
         <>
-            {/* Backdrop with Blur */}
+            {/* Backdrop with Blur - Hidden on mobile to feel like full page, visible on desktop */}
             <div
-                className={`fixed inset-0 top-0 bg-stone-900/40 backdrop-blur-sm z-30 transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+                className={`hidden md:block fixed inset-0 top-0 bg-stone-900/40 backdrop-blur-sm z-30 transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
                     }`}
                 onClick={onClose}
             />
 
-            {/* Drawer */}
+            {/* Drawer - Full width on mobile, 400px on desktop */}
             <div
-                className={`fixed top-0 right-0 h-full w-full max-w-[400px] bg-white z-40 shadow-2xl transform transition-transform duration-300 cubic-bezier(0.16, 1, 0.3, 1) pt-[65px] ${isOpen ? "translate-x-0" : "translate-x-full"
+                className={`fixed top-0 right-0 h-full w-full md:max-w-[400px] bg-white z-40 shadow-2xl transform transition-transform duration-300 cubic-bezier(0.16, 1, 0.3, 1) pt-[65px] ${isOpen ? "translate-x-0" : "translate-x-full"
                     }`}
             >
                 <button
@@ -118,9 +125,13 @@ export function ProductDrawer({ product, isOpen, onClose }: ProductDrawerProps) 
                         <div className="p-4 border-t border-stone-100 bg-white">
                             <button
                                 onClick={handleAddToCart}
-                                className="w-full bg-stone-800 text-white py-3 rounded text-base font-medium hover:bg-stone-700 transition-colors"
+                                disabled={isAdded}
+                                className={`w-full py-3 rounded text-base font-medium transition-all duration-200 transform active:scale-95 ${isAdded
+                                    ? "bg-[#C5A059] text-white"
+                                    : "bg-stone-800 text-white hover:bg-stone-700"
+                                    }`}
                             >
-                                Add to Cart - {formattedPrice}
+                                {isAdded ? "Added!" : `Add to Cart - ${formattedPrice}`}
                             </button>
                         </div>
                     </div>
