@@ -6,7 +6,7 @@ export function Footer() {
     return (
         <footer className="relative pt-16 pb-12 mt-24 md:fixed md:bottom-0 md:left-0 md:w-full md:-z-10 text-stone-300 overflow-hidden">
             <SlateBackground />
-            <div className="max-w-6xl mx-auto px-6">
+            <div className="relative z-10 max-w-6xl mx-auto px-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
                     {/* Column 1: Shop */}
                     <div>
