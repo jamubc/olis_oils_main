@@ -1,9 +1,15 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: "2025-12-15.clover",
-});
+// Lazy initialization to avoid build-time errors
+function getStripe() {
+    if (!process.env.STRIPE_SECRET_KEY) {
+        throw new Error("STRIPE_SECRET_KEY is not configured");
+    }
+    return new Stripe(process.env.STRIPE_SECRET_KEY, {
+        apiVersion: "2025-12-15.clover",
+    });
+}
 
 export async function GET(request: Request) {
     try {
@@ -18,7 +24,7 @@ export async function GET(request: Request) {
         }
 
         // Retrieve the session from Stripe
-        const session = await stripe.checkout.sessions.retrieve(sessionId);
+        const session = await getStripe().checkout.sessions.retrieve(sessionId);
 
         // Check if the payment was successful
         if (session.payment_status === "paid") {

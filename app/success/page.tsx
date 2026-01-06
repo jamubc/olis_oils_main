@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { useShoppingCart } from "use-shopping-cart";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function SuccessPage() {
+function SuccessContent() {
     const { clearCart } = useShoppingCart();
     const searchParams = useSearchParams();
     const sessionId = searchParams.get("session_id");
@@ -107,5 +107,22 @@ export default function SuccessPage() {
                 Continue Shopping
             </Link>
         </div>
+    );
+}
+
+export default function SuccessPage() {
+    return (
+        <Suspense fallback={
+            <div className="max-w-2xl mx-auto px-6 py-16 text-center">
+                <div className="mb-6">
+                    <Loader2 className="w-16 h-16 text-stone-400 mx-auto animate-spin" />
+                </div>
+                <h1 className="font-serif text-3xl text-stone-800 mb-4">
+                    Loading...
+                </h1>
+            </div>
+        }>
+            <SuccessContent />
+        </Suspense>
     );
 }
