@@ -46,7 +46,7 @@ export async function POST(request: Request) {
             quantity: item.quantity,
         }));
 
-        const session = await stripe.checkout.sessions.create({
+        const session = await getStripe().checkout.sessions.create({
             line_items: lineItems,
             mode: "payment",
             success_url: `${process.env.NEXT_PUBLIC_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
