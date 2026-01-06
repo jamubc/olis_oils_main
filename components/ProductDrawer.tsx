@@ -74,7 +74,7 @@ export function ProductDrawer({ product, isOpen, onClose }: ProductDrawerProps) 
 
             {/* Drawer - Full width on mobile, 400px on desktop */}
             <div
-                className={`fixed top-0 right-0 h-full w-full md:max-w-[400px] bg-white z-[100] shadow-2xl transform transition-transform duration-300 cubic-bezier(0.16, 1, 0.3, 1) pt-[65px] ${isOpen ? "translate-x-0" : "translate-x-full"
+                className={`fixed top-0 right-0 h-full w-full md:max-w-[400px] bg-white z-[100] shadow-2xl transform transition-transform duration-300 ease-out pt-[65px] ${isOpen ? "translate-x-0" : "translate-x-full"
                     }`}
             >
                 {/* Back Button (Visible on all devices) */}

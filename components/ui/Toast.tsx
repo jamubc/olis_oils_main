@@ -34,6 +34,10 @@ export function useToast() {
 export function ToastProvider({ children }: { children: React.ReactNode }) {
     const [toasts, setToasts] = useState<Toast[]>([]);
 
+    const removeToast = useCallback((id: string) => {
+        setToasts((prev) => prev.filter((toast) => toast.id !== id));
+    }, []);
+
     const showToast = useCallback(
         (title: string, options: { message?: string; image?: string; type?: ToastType; duration?: number } = {}) => {
             const { message = "", image, type = "success", duration = 4000 } = options;
@@ -47,12 +51,8 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
                 }, duration);
             }
         },
-        []
+        [removeToast]
     );
-
-    const removeToast = useCallback((id: string) => {
-        setToasts((prev) => prev.filter((toast) => toast.id !== id));
-    }, []);
 
     return (
         <ToastContext.Provider value={{ showToast, removeToast }}>

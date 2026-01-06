@@ -1,2 +1,3 @@
 -- add estimated shipping time and cost to checkout page
--- verify stripe (or switch provider... TBD)
+-- Swap payment provider key details on vercel to olis
+-- Link to live domain

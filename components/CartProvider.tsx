@@ -3,6 +3,7 @@
 import { CartProvider as USCProvider } from "use-shopping-cart";
 
 const stripeKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!;
+const siteUrl = process.env.NEXT_PUBLIC_URL || "";
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
     return (
@@ -10,8 +11,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             mode="payment"
             cartMode="client-only"
             stripe={stripeKey}
-            successUrl={`${typeof window !== 'undefined' ? window.location.origin : ''}/success?session_id={CHECKOUT_SESSION_ID}`}
-            cancelUrl={`${typeof window !== 'undefined' ? window.location.origin : ''}/cart`}
+            successUrl={`${siteUrl}/success?session_id={CHECKOUT_SESSION_ID}`}
+            cancelUrl={`${siteUrl}/cart`}
             currency="CAD"
             shouldPersist={true}
         >
@@ -19,3 +20,4 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         </USCProvider>
     );
 }
+

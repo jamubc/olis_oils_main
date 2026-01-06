@@ -111,7 +111,7 @@ const OilySlateShader = {
             vec3 oilTint = vec3(0.95, 0.98, 1.0) + oilAmount * vec3(0.05, 0.02, -0.02);
             
             // Ambient light
-            vec3 ambient = baseColor * 0.4;
+            vec3 ambient = baseColor * 0.2;
             
             // Light color - warm golden point light
             vec3 lightColor = vec3(1.0, 0.9, 0.7);

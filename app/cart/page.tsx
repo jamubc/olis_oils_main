@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useShoppingCart } from "use-shopping-cart";
-import { Trash2, Plus, Minus } from "lucide-react";
+import { Trash2, Plus, Minus, Loader2 } from "lucide-react";
+import { useState } from "react";
 
 export default function CartPage() {
     const {
@@ -15,7 +16,13 @@ export default function CartPage() {
         decrementItem,
     } = useShoppingCart();
 
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
     const handleCheckout = async () => {
+        setIsLoading(true);
+        setError(null);
+
         try {
             const response = await fetch("/api/checkout", {
                 method: "POST",
@@ -25,13 +32,33 @@ export default function CartPage() {
                 body: JSON.stringify({ cartDetails }),
             });
 
-            const { url } = await response.json();
-
-            if (url) {
-                window.location.href = url;
+            // Check if response is JSON (API might return HTML error page)
+            const contentType = response.headers.get("content-type");
+            if (!contentType || !contentType.includes("application/json")) {
+                throw new Error("BACKEND_ERROR");
             }
-        } catch (error) {
-            console.error("Checkout error:", error);
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || "Failed to create checkout session");
+            }
+
+            if (data.url) {
+                window.location.href = data.url;
+            } else {
+                throw new Error("No checkout URL received");
+            }
+        } catch (err) {
+            console.error("Checkout error:", err);
+
+            // Show user-friendly message for backend issues
+            if (err instanceof Error && err.message === "BACKEND_ERROR") {
+                setError("Issue with payment backend. Please try again later or contact support.");
+            } else {
+                setError("Something went wrong. Please try again.");
+            }
+            setIsLoading(false);
         }
     };
 
@@ -62,12 +89,18 @@ export default function CartPage() {
                     >
                         {/* Product Image */}
                         <div className="w-full md:w-24 h-48 md:h-24 relative bg-stone-100 rounded overflow-hidden flex-shrink-0">
-                            <Image
-                                src={item.image || "/placeholder.jpg"}
-                                alt={item.name}
-                                fill
-                                className="object-cover"
-                            />
+                            {item.image ? (
+                                <Image
+                                    src={item.image}
+                                    alt={item.name}
+                                    fill
+                                    className="object-cover"
+                                />
+                            ) : (
+                                <div className="w-full h-full flex items-center justify-center text-stone-400 text-xs">
+                                    No image
+                                </div>
+                            )}
                         </div>
 
                         {/* Product Details */}
@@ -125,11 +158,25 @@ export default function CartPage() {
                     </span>
                 </div>
 
+                {error && (
+                    <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm text-center">
+                        {error}
+                    </div>
+                )}
+
                 <button
                     onClick={handleCheckout}
-                    className="w-full bg-stone-800 text-white py-4 px-8 rounded text-lg font-medium hover:bg-stone-700 transition-colors"
+                    disabled={isLoading}
+                    className="w-full bg-stone-800 text-white py-4 px-8 rounded text-lg font-medium hover:bg-stone-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                    Checkout
+                    {isLoading ? (
+                        <>
+                            <Loader2 className="w-5 h-5 animate-spin" />
+                            Processing...
+                        </>
+                    ) : (
+                        "Checkout"
+                    )}
                 </button>
 
                 <Link

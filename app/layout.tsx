@@ -36,7 +36,7 @@ export default function RootLayout({
         <CartProvider>
           <ToastProvider>
             <Navigation />
-            <main className="relative z-10 bg-stone-50 shadow-md md:mb-[450px]">{children}</main>
+            <main className="relative z-10 bg-stone-50 shadow-md md:mb-[450px] min-h-screen">{children}</main>
             <Footer />
           </ToastProvider>
         </CartProvider>
