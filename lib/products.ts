@@ -40,9 +40,9 @@ export const products: Product[] = [
     currency: "CAD",
     size: "100 ml",
     image: "/catnip.png",
-    description: "PLACEHOLDER_DESCRIPTION: Product details for Cat Nip were incomplete in the source PDF. Preserve this exact placeholder text for seller to replace.",
-    ingredients: "PLACEHOLDER_INGREDIENTS",
-    scent: "PLACEHOLDER_SCENT"
+    description: "Cat Nip is a rich blend of catnip extract and olive oil. This blend is ideal for dry skin, sensitive skin. Catnip naturally promotes sweating while decreasing inflammation. Catnip smells very similar to mint, and yes, your cat will love it too.",
+    ingredients: "Olive oil, fermented catnip extract",
+    scent: "Mint"
   }
 ];
 

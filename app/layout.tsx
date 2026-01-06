@@ -19,8 +19,56 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Oli's Oils | Premium Natural Skincare",
-  description: "Natural oils that nourish skin and hair at a deeper level, support the body's natural balance, and deliver lasting hydration without harmful additives.",
+  title: {
+    default: "Oli's Oils | Premium Natural Skincare",
+    template: "%s | Oli's Oils",
+  },
+  description: "Premium natural oils for hair, skin & beard. Simple, effective, and environmentally responsible. Handcrafted with care in Canada.",
+  keywords: ["natural oils", "skincare", "beard oil", "hair oil", "organic", "Canadian", "handcrafted", "olive oil", "catnip oil"],
+  authors: [{ name: "Oli's Oils" }],
+  creator: "Oli's Oils",
+  publisher: "Oli's Oils",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_URL || "https://olisoils.ca"),
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_CA",
+    url: "/",
+    siteName: "Oli's Oils",
+    title: "Oli's Oils | Premium Natural Skincare",
+    description: "Premium natural oils for hair, skin & beard. Simple, effective, and environmentally responsible.",
+    images: [
+      {
+        url: "/handdrawn_footer_logo.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Oli's Oils - Premium Natural Skincare",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Oli's Oils | Premium Natural Skincare",
+    description: "Premium natural oils for hair, skin & beard. Simple, effective, and environmentally responsible.",
+    images: ["/handdrawn_footer_logo.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-icon.png",
+  },
 };
 
 export default function RootLayout({
